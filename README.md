@@ -1,4 +1,4 @@
-### Star Mapping 
+# Star Mapping 
 ## Truncated Icosahedron
 
 ![](img1.png)
