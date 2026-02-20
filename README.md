@@ -1,4 +1,5 @@
-.# Star Projector
+### Star Mapping 
+## Truncated Icosahedron
 
 ![](img1.png)
 
