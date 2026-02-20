@@ -23,10 +23,22 @@ export default class Topology {
 
     edges.forEach((edges, i) => polygons[i].edges = edges)
 
+    // Compute per-edge dihedral angles (angle between the normals of the two
+    // polygons sharing each edge). This is essential for non-Platonic solids
+    // like the truncated icosahedron which have multiple distinct dihedral angles.
+    const allEdges = [].concat(...edges)
+    allEdges.forEach(edge => {
+      if (edge.shared && edge.dihedral === undefined) {
+        const angle = edge.poly.plane.normal.angleTo(edge.shared.poly.plane.normal)
+        edge.dihedral = angle
+        edge.shared.dihedral = angle
+      }
+    })
+
     this.polygons = polygons
     this.dihedral = polygon.plane.normal.angleTo(polygon.edges[0].shared.poly.plane.normal)
     this.faceRadius = polygon.center.length()
-    this.edges = [].concat(...edges).reduce((edges, edge) => {
+    this.edges = allEdges.reduce((edges, edge) => {
       if (!edges.find(({id}) => id === edge.id)) {
         edges.push(edge)
       }

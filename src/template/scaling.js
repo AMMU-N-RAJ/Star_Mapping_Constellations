@@ -5,7 +5,8 @@ const inscribedRadiusByFaceCount = {
   6: .5,
   8: Math.sqrt(6) / 6,
   12: Math.pow(PHI, 2) / (2 * Math.sqrt(3 - PHI)),
-  20: Math.pow(PHI, 2) / (2 * Math.sqrt(3))
+  20: Math.pow(PHI, 2) / (2 * Math.sqrt(3)),
+  32: (Math.sqrt(58 + 18 * Math.sqrt(5)) + Math.sqrt(78 + 18 * Math.sqrt(5))) / 8
 }
 
 
@@ -14,7 +15,8 @@ const circumscribedRadiusByFaceCount = {
   6: Math.sqrt(3) / 2,
   8: Math.sqrt(2) / 2,
   12: PHI * Math.sqrt(3) / 2,
-  20: Math.sin(Math.PI * 2 / 5)
+  20: Math.sin(Math.PI * 2 / 5),
+  32: Math.sqrt(58 + 18 * Math.sqrt(5)) / 4
 }
 
 export const edgeLength = (polygons, boundingBox, amount) => {

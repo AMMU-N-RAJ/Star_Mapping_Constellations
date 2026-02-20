@@ -4,6 +4,7 @@ import * as three from 'three';
 import * as catalogs from './catalogs';
 import project from './project';
 import './components/preview';
+import createTruncatedIcosahedronGeometry from './geometry/truncated-icosahedron';
 
 Vue.use(vueAsyncComputed)
 
@@ -13,7 +14,8 @@ const AVAILABLE_GEOMETRIES = {
   Cube: new three.BoxGeometry(1, 1, 1),
   Octahedron: new three.OctahedronGeometry(),
   Dodecahedron: new three.DodecahedronGeometry(),
-  Icosahedron: new three.IcosahedronGeometry()
+  Icosahedron: new three.IcosahedronGeometry(),
+  'Truncated Icosahedron': createTruncatedIcosahedronGeometry()
 };
 
 new Vue({
@@ -29,7 +31,8 @@ new Vue({
       'Cube',
       'Octahedron',
       'Dodecahedron',
-      'Icosahedron'
+      'Icosahedron',
+      'Truncated Icosahedron'
     ],
     filters: {
       magnitude: 4.75,

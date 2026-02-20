@@ -17,12 +17,17 @@ export function constructHierarchicalMesh(topology) {
 
     pivotNode.position.add(node.edge.point);
     if (parent) {
+      // Use per-edge dihedral angle to support non-Platonic solids
+      // (e.g. truncated icosahedron) that have multiple distinct dihedral angles.
+      const edgeDihedral = node.edge.dihedral !== undefined
+        ? node.edge.dihedral
+        : topology.dihedral;
       pivotNode.userData.isPivot = true
       pivotNode.position.sub(parent.edge.point);
-      pivotNode.rotateOnAxis(pivotAxis, topology.dihedral);
+      pivotNode.rotateOnAxis(pivotAxis, edgeDihedral);
       pivotNode.userData.animate = t => {
         // rotations of 0 radians seem to cause sorting issues in the renderer
-        let angle = Math.max(0.0001, t * topology.dihedral);
+        let angle = Math.max(0.0001, t * edgeDihedral);
         pivotNode.rotation.set(0, 0, 0);
         pivotNode.rotateOnAxis(pivotAxis, angle);
       };
