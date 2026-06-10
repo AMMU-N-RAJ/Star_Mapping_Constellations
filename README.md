@@ -60,3 +60,113 @@ stars.
 
 You can visualize what it's like to unfold the 3D shape by clicking on it. It
 looks neat but doesn't actually serve much of a purpose.
+
+## How It Works
+
+The Star Mapping application follows this workflow:
+
+1. **Data Processing**: Real astrometric catalogue data (HD catalogue with over 98,000 stars) is loaded and filtered based on:
+   - Apparent brightness magnitude (user-selectable)
+   - Constellation membership (pre-filtered for "interesting" constellations with complex patterns)
+
+2. **Projection**: Selected stars and constellation lines are projected from the celestial sphere onto the surface of a chosen 3D polyhedron using Three.js geometric transformations.
+
+3. **Topology Analysis**: The application analyzes the topology and geometry of each face of the polyhedron to determine:
+   - Edge connections
+   - Polygon boundaries
+   - Vertex positions and transformations
+
+4. **2D Unfolding**: The 3D polyhedron is computationally "unfolded" into a 2D net (flat template) with:
+   - Cuts shown as solid lines
+   - Fold lines shown as dashed lines
+   - Stars positioned accurately for laser cutting
+
+5. **Visualization & Export**:
+   - A real-time 3D preview is displayed showing the projected stars on the chosen geometry
+   - The 2D template is generated as an SVG file suitable for laser cutting and assembly
+   - A light source placed at the center projects the cut-out stars onto surrounding surfaces when assembled
+
+## Development
+
+### Building the Project
+
+The project uses Webpack for bundling and development:
+
+```bash
+# Start development server on port 8080
+npm start
+
+# Build for production
+npm run build
+
+# Clean build artifacts
+npm run clean
+```
+
+### Architecture
+
+- **Frontend**: Vue.js 2.x application with reactive UI components
+- **3D Graphics**: Three.js for rendering and geometric transformations
+- **State Management**: Vue.js reactive data with async-computed properties
+- **Module Bundling**: Webpack with Babel transpilation for ES2015+ support
+- **Data Processing**: Python script (`filter.py`) for pre-processing star catalogue data
+- **SVG Generation**: Custom SVG rendering pipeline for laser-cutting templates
+
+### Key Modules
+
+- `app.js` — Main Vue application entry point
+- `project.js` — Core projection and building logic
+- `catalogs.js` — Star catalogue data management and queries
+- `topology/` — Geometric topology analysis
+- `geometry/` — Polyhedron geometry definitions and transformations
+- `projections/` — Star-to-polyhedron projection algorithms
+- `template/` — SVG generation and 2D net unfolding
+- `extensions/` — Three.js extensions for curves, bezier paths, and custom shapes
+
+## Tools Used
+
+### Frontend Technologies
+
+- **Vue.js 2.1.6** — Progressive JavaScript framework for reactive UI
+- **Three.js 0.88.0** — JavaScript 3D graphics library for rendering and geometric calculations
+- **Lodash 4.17.4** — Utility library for common programming tasks
+- **vue-async-computed 3.1.2** — Vue plugin for async computed properties
+
+### Build & Compilation
+
+- **Webpack 2.5.0** — Module bundler and build tool
+- **Babel 6.x** — JavaScript transpiler for ES2015+ syntax support
+- **Babel Plugins** — Transform object rest-spread, ES2015 preset support
+- **ESLint 3.7.1** — JavaScript linter with React plugin support
+- **webpack-dev-server 2.4.5** — Development server with hot module reloading
+
+### Asset Processing
+
+- **html-webpack-plugin 2.28.0** — HTML template generation
+- **extract-text-webpack-plugin 2.1.2** — CSS extraction from bundles
+- **file-loader 1.1.5** — Asset file bundling
+- **html-loader 0.4.5** — HTML content loading
+- **style-loader 0.19.0** — CSS injection into DOM
+- **css-loader 0.28.7** — CSS module loading
+- **worker-loader 0.8.0** — Web Worker bundling
+
+### Core Libraries
+
+- **bezier-js 2.2.3** — Bézier curve calculations and manipulation
+- **convexhull-js 1.0.0** — Convex hull computation for polygon analysis
+- **parse-svg-path 0.1.2** — SVG path parsing
+- **sift 3.2.6** — MongoDB query language implementation for filtering
+- **eventemitter3 2.0.3** — Event emitter for pub/sub patterns
+- **debounce 1.0.0** — Function debouncing for performance
+- **async 2.4.0** — Asynchronous utility functions
+- **threestyle 0.2.1** — Three.js styling utilities
+
+### Data Processing
+
+- **Python** — Server-side star catalogue filtering and data pre-processing
+- **JSON** — Structured data format for star catalogues and asterism definitions
+
+### Development Utilities
+
+- **whatwg-fetch 2.0.1** — Polyfill for modern Fetch API
+- **babel-polyfill 6.23.0** — JavaScript standard library polyfills
